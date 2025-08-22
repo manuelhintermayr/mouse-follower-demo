@@ -286,32 +286,22 @@
 
         <!-- Media Effects (Images & Videos) -->
         <section class="max-w-6xl mx-auto px-6 py-12 section">
-            <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">
-                Media Effects (Images & Videos)
-            </h2>
+            <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Media Effects (Images & Videos)</h2>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="p-4 border-3 border-current cursor-pointer" data-cursor="-pointer"
-                    data-cursor-text="PREVIEW"
-                    data-cursor-img="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80&auto=format&fit=crop">
-                    <h3 class="font-bold uppercase">Landscape Photo</h3>
-                    <p class="text-sm opacity-80">
-                        Hover to preview a beautiful landscape image
-                    </p>
+                <!-- Sample Image 1 -->
+                <div class="p-4 border-3 border-current cursor-pointer text-center" data-cursor-img="media/sample.jpg">
+                    <h3 class="font-bold uppercase">Sample Image</h3>
+                    <p class="text-sm opacity-80">Hover to preview the sample image</p>
                 </div>
-                <div class="p-4 border-3 border-current cursor-pointer" data-cursor="-pointer"
-                    data-cursor-text="PREVIEW"
-                    data-cursor-img="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80&auto=format&fit=crop">
-                    <h3 class="font-bold uppercase">Portrait Photo</h3>
-                    <p class="text-sm opacity-80">
-                        Hover to see a stunning portrait photo
-                    </p>
+                <!-- Sample Image 2 -->
+                <div class="p-4 border-3 border-current cursor-pointer text-center" data-cursor-img="media/avatar_1.jpg">
+                    <h3 class="font-bold uppercase">Avatar Image</h3>
+                    <p class="text-sm opacity-80">Hover to preview the avatar image</p>
                 </div>
-                <div class="p-4 border-3 border-current cursor-pointer" data-cursor="-pointer" data-cursor-text="PLAY"
-                    data-cursor-video="https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4">
+                <!-- Sample Video -->
+                <div class="p-4 border-3 border-current cursor-pointer text-center" data-cursor-video="media/sample.mp4">
                     <h3 class="font-bold uppercase">Sample Video</h3>
-                    <p class="text-sm opacity-80">
-                        Hover to preview Big Buck Bunny video
-                    </p>
+                    <p class="text-sm opacity-80">Hover to preview the sample video</p>
                 </div>
             </div>
         </section>
@@ -326,7 +316,7 @@
                     <!-- Sticky Element 1 -->
                     <div class="flex items-start justify-center h-full">
                         <div class="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center font-bold text-lg shadow-lg border-3 border-current cursor-pointer mt-0"
-                            data-cursor-stick>
+                            data-cursor-stick data-cursor="-inverse">
                             STICKY
                         </div>
                     </div>
