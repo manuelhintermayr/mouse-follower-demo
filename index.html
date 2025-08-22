@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Mouse Follower — Swiss Style Showcase</title>
+    <title>Mouse Follower Demo — Showcase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Tailwind -->
@@ -34,7 +34,7 @@
     <style>
         /* ===== International Typographic Style – Newspaper skin (CSS only) ===== */
 
-        /* Grundfarben (Dark über Tailwind .dark am <html>) */
+        /* Base colors (Dark via Tailwind .dark on <html>) */
         html,
         body {
             background: #fff;
@@ -46,7 +46,7 @@
             color: #fff;
         }
 
-        /* Feines Raster im Hintergrund */
+        /* Fine grid background */
         .grid-bg {
             background-image:
                 linear-gradient(to right, rgba(0, 0, 0, .06) 1px, transparent 1px),
@@ -60,12 +60,12 @@
                 linear-gradient(to bottom, rgba(255, 255, 255, .06) 1px, transparent 1px);
         }
 
-        /* Zeitungssektionen */
+        /* Newspaper sections */
         .section {
             border-top: 3px solid currentColor;
         }
 
-        /* Cards/Kacheln im Swiss-Look (deine Card-UI bleibt, nur verfeinert) */
+        /* Cards/tiles in Swiss style */
         .card {
             border: 3px solid currentColor;
             background: transparent;
@@ -76,7 +76,7 @@
             transform: translateY(-2px);
         }
 
-        /* Kleine Kipp-Variante (beibehalten) */
+        /* Small tilt variant (kept) */
         .card-tilt {
             transition: transform 0.15s ease;
             will-change: transform;
@@ -86,12 +86,12 @@
             transform: translateY(-2px);
         }
 
-        /* Headline-Spationierung */
+        /* Headline letter spacing */
         .headline {
             letter-spacing: .02em;
         }
 
-        /* Newspaper: Spaltenlayout für den Hauptteil */
+        /* Newspaper: column layout for main content */
         .news-cols {
             column-gap: 2.5rem;
         }
@@ -108,7 +108,7 @@
             }
         }
 
-        /* Artikelblöcke mit Toplinie, bruchsicher in Spalten */
+        /* Article blocks with top line, break-proof in columns */
         .article {
             break-inside: avoid;
             border-top: 3px solid currentColor;
@@ -116,7 +116,7 @@
             margin-bottom: 2rem;
         }
 
-        /* Sticky Controls unten rechts (Top/Dark) */
+        /* Sticky controls bottom right (Top/Dark) */
         .sticky-controls {
             position: fixed;
             right: 1rem;
@@ -152,7 +152,7 @@
             letter-spacing: .06em;
         }
 
-        /* Cursor-Feinschliff (deine States unverändert) */
+        /* Mouse Follower fine-tuning */
         .mf-cursor-text {
             color: #fff !important;
         }
@@ -202,28 +202,38 @@
         <header class="max-w-6xl mx-auto px-6 md:px-8 pt-10">
             <div class="masthead flex flex-col gap-2">
                 <div class="uppercase tracking-wide2 text-sm">Mouse Follower Demo · Swiss Style (ITS)</div>
-                <h1 class="text-4xl md:text-7xl font-bold uppercase leading-none">MOUSE FOLLOWER — TEMPLATE SWISS STYLE</h1>
+                <h1 class="text-4xl md:text-7xl font-bold uppercase leading-none">MOUSE FOLLOWER — TEMPLATE SWISS STYLE
+                </h1>
                 <div class="flex justify-between text-xs md:text-sm uppercase">
-                    <div>Built with ❤️ by <a href="https://manuelhintermayr.com" target="_blank" rel="noopener" class="underline" data-cursor="-pointer"><strong>Manuel Hintermayr</strong></a></div>
+                    <div>Built with ❤️ by <a href="https://manuelhintermayr.com" target="_blank" rel="noopener"
+                            class="underline" data-cursor="-pointer"><strong>Manuel Hintermayr</strong></a></div>
                     <div>
                         {{ new Date().toLocaleDateString() }} · Based on
-                        <a class="underline" data-cursor="-pointer" href="https://github.com/manuelhintermayr/nuxt4-template" target="_blank">nuxt4-template</a>
+                        <a class="underline" data-cursor="-pointer"
+                            href="https://github.com/manuelhintermayr/nuxt4-template" target="_blank">nuxt4-template</a>
                     </div>
                 </div>
             </div>
             <div class="mast-rule mt-4"></div>
             <p class="mt-6 uppercase">
-                Minimalist showcase of the <a href="https://github.com/Cuberto/mouse-follower" target="_blank" rel="noopener" class="underline" data-cursor="-pointer"><strong>Mouse Follower</strong> by Cuberto</a>.<br>
-                Strict grid, black/white, strong typographic hierarchy — inspired by Swiss Style (International Typographic Style).
+                Minimalist showcase of the <a href="https://github.com/Cuberto/mouse-follower" target="_blank"
+                    rel="noopener" class="underline" data-cursor="-pointer"><strong>Mouse Follower</strong> by
+                    Cuberto</a>.<br>
+                Strict grid, black/white, strong typographic hierarchy — inspired by Swiss Style (International
+                Typographic Style).
                 <br />
-                Originally implemented in <a class="underline" data-cursor="-pointer" href="https://github.com/manuelhintermayr/nuxt4-template" target="_blank">nuxt4-template</a>. See the <a class="underline" data-cursor="-pointer" href="https://github.com/manuelhintermayr/mouse-follower-demo" target="_blank">GitHub repository</a>.
+                Originally implemented in <a class="underline" data-cursor="-pointer"
+                    href="https://github.com/manuelhintermayr/nuxt4-template" target="_blank">nuxt4-template</a>. See
+                the <a class="underline" data-cursor="-pointer"
+                    href="https://github.com/manuelhintermayr/mouse-follower-demo" target="_blank">GitHub
+                    repository</a>.
             </p>
         </header>
 
-        <!-- ===== Newspaper Body: Dein Content in Spalten gerendert ===== -->
+        <!-- ===== Newspaper Body ===== -->
         <main class="max-w-6xl mx-auto px-6 md:px-8 py-10 news-cols">
 
-            <!-- Project Cards (als Artikelblock) -->
+            <!-- Project Cards -->
             <article class="article">
                 <h2 class="text-2xl md:text-4xl font-bold uppercase mb-8">Project Cards</h2>
                 <div class="card p-6 mb-4" data-cursor-text="View Details">
@@ -279,12 +289,15 @@
             <!-- Special Cursor States -->
             <article class="article">
                 <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Special Cursor States</h2>
-                <div class="card-tilt p-6 bg-black text-white text-left cursor-pointer relative overflow-hidden mb-3" data-cursor="-inverse">
+                <div class="card-tilt p-6 bg-black text-white text-left cursor-pointer relative overflow-hidden mb-3"
+                    data-cursor="-inverse">
                     <h3 class="text-lg font-extrabold uppercase">Inverse Cursor</h3>
                     <p class="mt-2 text-base opacity-80">Light cursor on dark background</p>
-                    <div class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
+                    <div
+                        class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
                         <div class="text-center bg-black/80 py-2 px-3 border-2 border-current">
-                            <p class="text-xs font-medium text-gray-200 leading-tight">This demo is not fully available in dark mode</p>
+                            <p class="text-xs font-medium text-gray-200 leading-tight">This demo is not fully available
+                                in dark mode</p>
                         </div>
                     </div>
                 </div>
@@ -292,7 +305,8 @@
                     <h3 class="text-lg font-extrabold uppercase">Hidden Cursor</h3>
                     <p class="mt-2 text-base opacity-80">Cursor becomes invisible</p>
                 </div>
-                <div class="card p-6 text-left cursor-pointer mb-3" data-cursor="-theme" data-cursor-text="Theme Element">
+                <div class="card p-6 text-left cursor-pointer mb-3" data-cursor="-theme"
+                    data-cursor-text="Theme Element">
                     <h3 class="text-lg font-extrabold uppercase">Theme Element</h3>
                     <p class="mt-2 text-base opacity-80">Custom gradient styling</p>
                 </div>
@@ -304,7 +318,8 @@
                     <h3 class="text-lg font-extrabold uppercase">Pointer State</h3>
                     <p class="mt-2 text-base opacity-80">Custom pointer styling</p>
                 </div>
-                <div class="card p-6 text-left cursor-pointer" @mouseenter="addCustomState" @mouseleave="removeCustomState">
+                <div class="card p-6 text-left cursor-pointer" @mouseenter="addCustomState"
+                    @mouseleave="removeCustomState">
                     <h3 class="text-lg font-extrabold uppercase">Custom State</h3>
                     <p class="mt-2 text-base opacity-80">Dynamic custom styling</p>
                 </div>
@@ -381,8 +396,8 @@
                     <span class="opacity-70 text-sm">Medium distortion effect</span>
                 </button>
                 <button class="p-6 border-3 border-current uppercase cursor-pointer w-full text-left"
-                    data-cursor="-skew-extreme -pointer" data-cursor-text="Extreme Skew"
-                    onmouseenter="setSkewing(100)" onmouseleave="removeSkewing()">
+                    data-cursor="-skew-extreme -pointer" data-cursor-text="Extreme Skew" onmouseenter="setSkewing(100)"
+                    onmouseleave="removeSkewing()">
                     Extreme Skew —
                     <span class="opacity-70 text-sm">Maximum distortion effect</span>
                 </button>
@@ -390,7 +405,7 @@
 
         </main>
 
-        <!-- Sticky controls (Top + Mode) -->
+        <!-- Sticky controls (Top + Light/Dark Mode) -->
         <div class="sticky-controls">
             <button class="ctl-btn bg-white/80 dark:bg-black/80" @click="scrollTop">Top ↑</button>
             <button class="ctl-btn bg-white dark:bg-black" @click="toggleDark">
@@ -399,7 +414,8 @@
         </div>
 
         <footer class="max-w-6xl mx-auto px-6 py-12 border-t-4 border-current uppercase text-sm">
-            © {{ new Date().getFullYear() }} — Mouse Follower • <a href="https://manuelhintermayr.com" target="_blank" rel="noopener" class="underline" data-cursor="-pointer">Manuel Hintermayr</a>
+            © {{ new Date().getFullYear() }} — Mouse Follower • <a href="https://manuelhintermayr.com" target="_blank"
+                rel="noopener" class="underline" data-cursor="-pointer">Manuel Hintermayr</a>
         </footer>
     </div>
 
