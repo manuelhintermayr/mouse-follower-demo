@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Mouse Follower — Swiss Style Showcase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Helvetica', 'Arial', 'sans-serif'] },
+                    borderWidth: { '3': '3px' }
+                }
+            }
+        }
+    </script>
+
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <!-- GSAP -->
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+    <!-- Mouse Follower -->
+    <link rel="stylesheet" href="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.css">
+    <script src="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.js"></script>
+
+    <style>
+        html,
+        body {
+            background: #fff;
+            color: #000
+        }
+
+        .dark body {
+            background: #000;
+            color: #fff
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(to right, rgba(0, 0, 0, .06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, .06) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .dark .grid-bg {
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, .06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, .06) 1px, transparent 1px);
+        }
+
+        .section {
+            border-top: 3px solid currentColor;
+        }
+
+        .card {
+            border: 3px solid currentColor;
+            background: transparent;
+            transition: transform .15s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .headline {
+            letter-spacing: .02em;
+        }
+
+        /* Mouse Follower cosmetics / states */
+        .mf-cursor.-inverse .mf-cursor-inner {
+            background: #fff !important;
+            border-color: #000 !important;
+        }
+
+        .dark .mf-cursor.-inverse .mf-cursor-inner {
+            background: #000 !important;
+            border-color: #fff !important;
+        }
+
+        .mf-cursor.-hidden {
+            opacity: 0 !important;
+        }
+
+        /* hides follower only (native stays) */
+        .mf-cursor.-theme .mf-cursor-inner {
+            background: conic-gradient(from 90deg, #000 0 25%, #fff 0 50%, #000 0 75%, #fff 0 100%);
+        }
+
+        .mf-cursor.-opaque .mf-cursor-inner {
+            opacity: .4;
+        }
+
+        .mf-cursor.-pointer .mf-cursor-inner {
+            transform: scale(1.1);
+        }
+
+        .mf-cursor.-custom .mf-cursor-inner {
+            transform: scale(1.25) rotate(2deg);
+            border-width: 3px;
+        }
+
+        .sticky-controls {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .ctl-btn {
+            padding: .5rem 1rem;
+            border: 3px solid currentColor;
+            background: transparent;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .ctl-btn:active {
+            transform: translateY(1px);
+        }
+
+        .card-tilt {
+            transition: transform .15s ease;
+            will-change: transform;
+        }
+
+        .card-tilt:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="font-sans">
+    <div id="app" class="grid-bg min-h-screen transition-colors">
+
+        <!-- Intro -->
+        <header class="max-w-6xl mx-auto px-6 py-10 section">
+            <h1 class="headline text-3xl md:text-6xl font-bold uppercase">Mouse Follower — Swiss Style Showcase</h1>
+            <p class="mt-4 text-base md:text-lg uppercase">
+                A minimalist demo of the <strong>Mouse Follower</strong> cursor by Cuberto – in International
+                Typographic Style.
+            </p>
+            <p class="mt-2 text-sm md:text-base">
+                Crafted with &lt;3 by <strong>Manuel Hintermayr</strong>. Originally integrated in
+                <a href="https://github.com/manuelhintermayr/nuxt4-template" target="_blank"
+                    class="underline">nuxt4-template</a>.
+            </p>
+        </header>
+
+        <!-- Project Cards -->
+        <section class="max-w-6xl mx-auto px-6 py-12 section">
+            <h2 class="text-2xl md:text-4xl font-bold uppercase mb-8">Project Cards</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <article class="card p-6" data-cursor="-opaque -pointer" data-cursor-text="VIEW">
+                    <h3 class="text-xl font-bold uppercase">Web Application</h3>
+                    <p class="mt-2 text-sm md:text-base">A modern web app with smooth animations and interactions.</p>
+                </article>
+                <article class="card p-6" data-cursor="-opaque -pointer" data-cursor-text="OPEN">
+                    <h3 class="text-xl font-bold uppercase">UI Components</h3>
+                    <p class="mt-2 text-sm md:text-base">Beautiful UI components with custom cursor effects.</p>
+                </article>
+                <article class="card p-6" data-cursor="-pointer" data-cursor-text="READ">
+                    <h3 class="text-xl font-bold uppercase">Case Study</h3>
+                    <p class="mt-2 text-sm md:text-base">Typographic system, strict grids, visual reduction.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Text Effects -->
+        <section class="max-w-6xl mx-auto px-6 py-12 section">
+            <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Text Effects</h2>
+            <p class="text-lg leading-relaxed">
+                This is regular text with a
+                <span class="underline px-1" data-cursor="-opaque -pointer" data-cursor-text="HOVER">
+                    special hover effect
+                </span>,
+                and this text has a
+                <span class="px-1 border-b-2 border-current" id="stickyTextTarget">
+                    sticky cursor effect
+                </span>
+                that follows your mouse.
+            </p>
+        </section>
+
+        <!-- Configuration -->
+        <section class="max-w-6xl mx-auto px-6 py-12 section">
+            <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Configuration Options</h2>
+            <div class="p-6 border-3 border-current">
+                <label class="block uppercase font-bold mb-4">Cursor Speed</label>
+                <input type="range" min="0.1" max="2" step="0.05" v-model.number="speed" @input="applySpeed"
+                    class="w-full accent-black dark:accent-white">
+                <div class="mt-3 text-sm">Current Speed: <strong>{{ speed.toFixed(2) }}</strong></div>
+            </div>
+        </section>
+
+        <!-- SPECIAL CURSOR STATES (styled like your screenshot) -->
+        <section class="max-w-6xl mx-auto px-6 py-12 section">
+            <h2 class="text-3xl md:text-5xl font-extrabold uppercase mb-6 tracking-tight">Special Cursor States</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Inverse (black tile) -->
+                <div data-cursor="-inverse"
+                    class="card-tilt p-6 bg-black text-white text-left cursor-pointer relative overflow-hidden">
+                    <h3 class="text-lg font-extrabold uppercase">Inverse Cursor</h3>
+                    <p class="mt-2 text-base opacity-80">Light cursor on dark background</p>
+
+                    <!-- Dark mode overlay (same behavior) -->
+                    <div
+                        class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
+                        <div class="text-center bg-black/80 py-2 px-3">
+                            <p class="text-xs font-medium text-gray-200 leading-tight">
+                                This demo is not available in dark mode
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hidden (white tile with border) -->
+                <div data-cursor="-hidden" class="card p-6 text-left cursor-pointer">
+                    <h3 class="text-lg font-extrabold uppercase">Hidden Cursor</h3>
+                    <p class="mt-2 text-base opacity-80">Cursor becomes invisible</p>
+                </div>
+
+                <!-- Theme -->
+                <div class="card p-6 text-left cursor-pointer" data-cursor="-theme" data-cursor-text="Theme Element">
+                    <h3 class="text-lg font-extrabold uppercase">Theme Element</h3>
+                    <p class="mt-2 text-base opacity-80">Custom gradient styling</p>
+                </div>
+
+                <!-- Opaque -->
+                <div class="card p-6 text-left cursor-pointer" data-cursor="-opaque">
+                    <h3 class="text-lg font-extrabold uppercase">Opaque State</h3>
+                    <p class="mt-2 text-base opacity-80">Semi-transparent cursor</p>
+                </div>
+
+                <!-- Pointer -->
+                <div class="card p-6 text-left cursor-pointer" data-cursor="-pointer" data-cursor-text="LINK">
+                    <h3 class="text-lg font-extrabold uppercase">Pointer State</h3>
+                    <p class="mt-2 text-base opacity-80">Custom pointer styling</p>
+                </div>
+
+                <!-- Custom -->
+                <div class="card p-6 text-left cursor-pointer" @mouseenter="addCustomState"
+                    @mouseleave="removeCustomState">
+                    <h3 class="text-lg font-extrabold uppercase">Custom State</h3>
+                    <p class="mt-2 text-base opacity-80">Dynamic custom styling</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sticky controls (Top + Mode) -->
+        <div class="sticky-controls">
+            <button class="ctl-btn bg-white/80 dark:bg-black/80" @click="scrollTop">Top ↑</button>
+            <button class="ctl-btn bg-white dark:bg-black" @click="toggleDark">
+                {{ isDark ? 'Light Mode' : 'Dark Mode' }}
+            </button>
+        </div>
+
+        <footer class="max-w-6xl mx-auto px-6 py-12 border-t-4 border-current uppercase text-sm">
+            © {{ new Date().getFullYear() }} — Swiss Style Demo • Mouse Follower • Manuel Hintermayr
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const isDark = ref(false);
+                const speed = ref(0.5);
+                let cursor;
+
+                // Init / Re-init mouse follower
+                const initCursor = () => {
+                    if (cursor) cursor.destroy();
+                    cursor = new MouseFollower({
+                        speed: Number(speed.value),
+                        ease: 'expo.out',
+                        // IMPORTANT: native pointer remains visible; -hidden hides follower only
+                        stateDetection: {
+                            '-pointer': 'a,button,[data-cursor*="-pointer"],[data-cursor*="-text"]',
+                            '-hidden': '[data-cursor~="-hidden"]'
+                        }
+                    });
+                };
+
+                // Toggle dark mode on <html> (Tailwind expects class on root)
+                const toggleDark = () => {
+                    isDark.value = !isDark.value;
+                    const root = document.documentElement;
+                    if (isDark.value) root.classList.add('dark'); else root.classList.remove('dark');
+                    // re-init follower to refresh contrast presets
+                    setTimeout(() => initCursor(), 50);
+                };
+
+                const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                const applySpeed = () => {
+                    try { cursor.setOptions({ speed: Number(speed.value) }); }
+                    catch (e) { initCursor(); }
+                };
+
+                const addCustomState = () => cursor?.addState && cursor.addState('-custom');
+                const removeCustomState = () => cursor?.removeState && cursor.removeState('-custom');
+
+                onMounted(() => {
+                    // ensure initial dark class reflects isDark
+                    if (isDark.value) document.documentElement.classList.add('dark'); else document.documentElement.classList.remove('dark');
+
+                    initCursor();
+
+                    gsap.registerPlugin(ScrollTrigger);
+                    gsap.utils.toArray('section').forEach(sec => {
+                        gsap.from(sec, {
+                            opacity: 0, y: 20, duration: .55, ease: 'power1.out',
+                            scrollTrigger: { trigger: sec, start: 'top 85%' }
+                        });
+                    });
+
+                    // Sticky text effect
+                    const stickySpan = document.querySelector('#stickyTextTarget');
+                    if (stickySpan) {
+                        stickySpan.setAttribute('data-cursor', '-pointer');
+                        stickySpan.setAttribute('data-cursor-text', 'STICKY');
+                        stickySpan.setAttribute('data-cursor-stick', '#stickyTextTarget');
+                    }
+                });
+
+                return { isDark, speed, toggleDark, scrollTop, applySpeed, addCustomState, removeCustomState };
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
