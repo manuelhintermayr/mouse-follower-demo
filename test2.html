@@ -220,32 +220,30 @@
         </header>
 
         <!-- ===== Newspaper Body: Dein Content in Spalten gerendert ===== -->
-        <main class="max-w-6xl mx-auto px-6 py-0 news-cols">
+        <main class="max-w-6xl mx-auto px-6 md:px-8 py-10 news-cols">
 
             <!-- Project Cards (als Artikelblock) -->
             <article class="article">
                 <h2 class="text-2xl md:text-4xl font-bold uppercase mb-8">Project Cards</h2>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <article class="card p-6" data-cursor-text="View Details">
-                        <h3 class="text-xl font-bold uppercase">Web Application</h3>
-                        <p class="mt-2 text-sm md:text-base">
-                            A modern web app with smooth animations and interactions.
-                        </p>
-                    </article>
+                <div class="card p-6 mb-4" data-cursor-text="View Details">
+                    <h3 class="text-xl font-bold uppercase">Web Application</h3>
+                    <p class="mt-2 text-sm md:text-base">
+                        A modern web app with smooth animations and interactions.
+                    </p>
+                </div>
 
-                    <article data-cursor="-inverse" data-cursor-text="Explore Project"
-                        class="card-tilt p-6 bg-black text-white text-left cursor-pointer relative overflow-hidden">
-                        <h3 class="text-xl font-bold uppercase">UI Components</h3>
-                        <p class="mt-2 text-sm md:text-base">Beautiful UI components with custom cursor effects.</p>
-                        <div
-                            class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
-                            <div class="text-center bg-black/80 py-2 px-3 border-2 border-current">
-                                <p class="text-xs font-medium text-gray-200 leading-tight">
-                                    This demo is not fully available in dark mode
-                                </p>
-                            </div>
+                <div data-cursor="-inverse" data-cursor-text="Explore Project"
+                    class="card-tilt p-6 bg-black text-white text-left cursor-pointer relative overflow-hidden mb-4">
+                    <h3 class="text-xl font-bold uppercase">UI Components</h3>
+                    <p class="mt-2 text-sm md:text-base">Beautiful UI components with custom cursor effects.</p>
+                    <div
+                        class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
+                        <div class="text-center bg-black/80 py-2 px-3 border-2 border-current">
+                            <p class="text-xs font-medium text-gray-200 leading-tight">
+                                This demo is not fully available in dark mode
+                            </p>
                         </div>
-                    </article>
+                    </div>
                 </div>
             </article>
 
@@ -279,82 +277,58 @@
 
             <!-- Special Cursor States -->
             <article class="article">
-                <h2 class="text-3xl md:text-5xl font-extrabold uppercase mb-6 tracking-tight">
-                    Special Cursor States
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Inverse -->
-                    <div data-cursor="-inverse"
-                        class="card-tilt p-6 bg-black text-white text-left cursor-pointer relative overflow-hidden">
-                        <h3 class="text-lg font-extrabold uppercase">Inverse Cursor</h3>
-                        <p class="mt-2 text-base opacity-80">Light cursor on dark background</p>
-                        <div
-                            class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
-                            <div class="text-center bg-black/80 py-2 px-3 border-2 border-current">
-                                <p class="text-xs font-medium text-gray-200 leading-tight">
-                                    This demo is not fully available in dark mode
-                                </p>
-                            </div>
+                <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Special Cursor States</h2>
+                <div class="card-tilt p-6 bg-black text-white text-left cursor-pointer relative overflow-hidden mb-3" data-cursor="-inverse">
+                    <h3 class="text-lg font-extrabold uppercase">Inverse Cursor</h3>
+                    <p class="mt-2 text-base opacity-80">Light cursor on dark background</p>
+                    <div class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
+                        <div class="text-center bg-black/80 py-2 px-3 border-2 border-current">
+                            <p class="text-xs font-medium text-gray-200 leading-tight">This demo is not fully available in dark mode</p>
                         </div>
                     </div>
-
-                    <!-- Hidden -->
-                    <div data-cursor="-hidden" class="card p-6 text-left cursor-pointer">
-                        <h3 class="text-lg font-extrabold uppercase">Hidden Cursor</h3>
-                        <p class="mt-2 text-base opacity-80">Cursor becomes invisible</p>
-                    </div>
-
-                    <!-- Theme -->
-                    <div class="card p-6 text-left cursor-pointer" data-cursor="-theme"
-                        data-cursor-text="Theme Element">
-                        <h3 class="text-lg font-extrabold uppercase">Theme Element</h3>
-                        <p class="mt-2 text-base opacity-80">Custom gradient styling</p>
-                    </div>
-
-                    <!-- Opaque -->
-                    <div class="card p-6 text-left cursor-pointer" data-cursor="-opaque">
-                        <h3 class="text-lg font-extrabold uppercase">Opaque State</h3>
-                        <p class="mt-2 text-base opacity-80">Semi-transparent cursor</p>
-                    </div>
-
-                    <!-- Pointer -->
-                    <div class="card p-6 text-left cursor-pointer" data-cursor="-pointer">
-                        <h3 class="text-lg font-extrabold uppercase">Pointer State</h3>
-                        <p class="mt-2 text-base opacity-80">Custom pointer styling</p>
-                    </div>
-
-                    <!-- Custom -->
-                    <div class="card p-6 text-left cursor-pointer" @mouseenter="addCustomState"
-                        @mouseleave="removeCustomState">
-                        <h3 class="text-lg font-extrabold uppercase">Custom State</h3>
-                        <p class="mt-2 text-base opacity-80">Dynamic custom styling</p>
-                    </div>
+                </div>
+                <div class="card p-6 text-left cursor-pointer mb-3" data-cursor="-hidden">
+                    <h3 class="text-lg font-extrabold uppercase">Hidden Cursor</h3>
+                    <p class="mt-2 text-base opacity-80">Cursor becomes invisible</p>
+                </div>
+                <div class="card p-6 text-left cursor-pointer mb-3" data-cursor="-theme" data-cursor-text="Theme Element">
+                    <h3 class="text-lg font-extrabold uppercase">Theme Element</h3>
+                    <p class="mt-2 text-base opacity-80">Custom gradient styling</p>
+                </div>
+                <div class="card p-6 text-left cursor-pointer mb-3" data-cursor="-opaque">
+                    <h3 class="text-lg font-extrabold uppercase">Opaque State</h3>
+                    <p class="mt-2 text-base opacity-80">Semi-transparent cursor</p>
+                </div>
+                <div class="card p-6 text-left cursor-pointer mb-3" data-cursor="-pointer">
+                    <h3 class="text-lg font-extrabold uppercase">Pointer State</h3>
+                    <p class="mt-2 text-base opacity-80">Custom pointer styling</p>
+                </div>
+                <div class="card p-6 text-left cursor-pointer" @mouseenter="addCustomState" @mouseleave="removeCustomState">
+                    <h3 class="text-lg font-extrabold uppercase">Custom State</h3>
+                    <p class="mt-2 text-base opacity-80">Dynamic custom styling</p>
                 </div>
             </article>
 
             <!-- Media Effects -->
             <article class="article">
                 <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Media Effects (Images & Videos)</h2>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <!-- Sample Image 1 -->
-                    <div class="p-4 border-3 border-current cursor-pointer text-center"
-                        data-cursor-img="media/sample.jpg">
-                        <h3 class="font-bold uppercase">Sample Image</h3>
-                        <p class="text-sm opacity-80">Hover to preview the sample image</p>
-                    </div>
-                    <!-- Sample Image 2 -->
-                    <div class="p-4 border-3 border-current cursor-pointer text-center"
-                        data-cursor-img="media/avatar_1.jpg">
-                        <h3 class="font-bold uppercase">Avatar Image</h3>
-                        <p class="text-sm opacity-80">Hover to preview the avatar image</p>
-                    </div>
-                    <!-- Sample Video -->
-                    <div class="p-4 border-3 border-current cursor-pointer text-center"
-                        data-cursor-video="media/sample.mp4">
-                        <h3 class="font-bold uppercase">Sample Video</h3>
-                        <p class="text-sm opacity-80">Hover to preview the sample video</p>
-                    </div>
+                <!-- Sample Image 1 -->
+                <div class="p-4 border-3 border-current cursor-pointer text-center mb-3"
+                    data-cursor-img="media/sample.jpg">
+                    <h3 class="font-bold uppercase">Sample Image</h3>
+                    <p class="text-sm opacity-80">Hover to preview the sample image</p>
+                </div>
+                <!-- Sample Image 2 -->
+                <div class="p-4 border-3 border-current cursor-pointer text-center mb-3"
+                    data-cursor-img="media/avatar_1.jpg">
+                    <h3 class="font-bold uppercase">Avatar Image</h3>
+                    <p class="text-sm opacity-80">Hover to preview the avatar image</p>
+                </div>
+                <!-- Sample Video -->
+                <div class="p-4 border-3 border-current cursor-pointer text-center"
+                    data-cursor-video="media/sample.mp4">
+                    <h3 class="font-bold uppercase">Sample Video</h3>
+                    <p class="text-sm opacity-80">Hover to preview the sample video</p>
                 </div>
             </article>
 
@@ -393,26 +367,24 @@
             <!-- Skewing Effects -->
             <article class="article">
                 <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Skewing Effects</h2>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <button class="p-6 border-3 border-current uppercase cursor-pointer"
-                        data-cursor="-skew-light -pointer" data-cursor-text="Light Skew" onmouseenter="setSkewing(5)"
-                        onmouseleave="removeSkewing()">
-                        Light Skew —
-                        <span class="opacity-70 text-sm">Subtle distortion effect</span>
-                    </button>
-                    <button class="p-6 border-3 border-current uppercase cursor-pointer"
-                        data-cursor="-skew-strong -pointer" data-cursor-text="Strong Skew" onmouseenter="setSkewing(50)"
-                        onmouseleave="removeSkewing()">
-                        Strong Skew —
-                        <span class="opacity-70 text-sm">Medium distortion effect</span>
-                    </button>
-                    <button class="p-6 border-3 border-current uppercase cursor-pointer"
-                        data-cursor="-skew-extreme -pointer" data-cursor-text="Extreme Skew"
-                        onmouseenter="setSkewing(100)" onmouseleave="removeSkewing()">
-                        Extreme Skew —
-                        <span class="opacity-70 text-sm">Maximum distortion effect</span>
-                    </button>
-                </div>
+                <button class="p-6 border-3 border-current uppercase cursor-pointer w-full text-left mb-3"
+                    data-cursor="-skew-light -pointer" data-cursor-text="Light Skew" onmouseenter="setSkewing(5)"
+                    onmouseleave="removeSkewing()">
+                    Light Skew —
+                    <span class="opacity-70 text-sm">Subtle distortion effect</span>
+                </button>
+                <button class="p-6 border-3 border-current uppercase cursor-pointer w-full text-left mb-3"
+                    data-cursor="-skew-strong -pointer" data-cursor-text="Strong Skew" onmouseenter="setSkewing(50)"
+                    onmouseleave="removeSkewing()">
+                    Strong Skew —
+                    <span class="opacity-70 text-sm">Medium distortion effect</span>
+                </button>
+                <button class="p-6 border-3 border-current uppercase cursor-pointer w-full text-left"
+                    data-cursor="-skew-extreme -pointer" data-cursor-text="Extreme Skew"
+                    onmouseenter="setSkewing(100)" onmouseleave="removeSkewing()">
+                    Extreme Skew —
+                    <span class="opacity-70 text-sm">Maximum distortion effect</span>
+                </button>
             </article>
 
         </main>
