@@ -302,17 +302,18 @@
             <div class="border-3 border-current p-8">
                 <div class="grid md:grid-cols-2 gap-8">
                     <!-- Sticky Element 1 -->
-                    <div data-cursor-stick class="flex items-start justify-center h-full">
-                        <div
-                            class="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center font-bold text-lg shadow-lg border-3 border-current cursor-pointer mt-0">
+                    <div class="flex items-start justify-center h-full">
+                        <div class="bg-black text-white rounded-full w-20 h-20 flex items-center justify-center font-bold text-lg shadow-lg border-3 border-current cursor-pointer mt-0"
+                            data-cursor-stick>
                             STICKY
                         </div>
                     </div>
                     <!-- Sticky Element 2 with target -->
-                    <div
-                        class="text-center flex flex-col items-center justify-center mt-4 aspect-[16/9] bg-black/5 border-2 border-current">
-                        <p class="mb-4 text-base md:text-lg uppercase font-medium text-black dark:text-white">Hover here to stick cursor to target:</p>
-                        <div data-cursor-stick="#stick-target" class="inline-block cursor-pointer">
+                    <div class="text-center flex flex-col items-center justify-center mt-4 aspect-[16/9] bg-black/5 border-2 border-current"
+                        data-cursor-stick="#stick-target">
+                        <p class="mb-4 text-base md:text-lg uppercase font-medium text-black dark:text-white">Hover here
+                            to stick cursor to target:</p>
+                        <div class="inline-block cursor-pointer">
                             <div id="stick-target"
                                 class="bg-yellow-400 text-yellow-900 rounded-full w-24 h-24 flex items-center justify-center font-bold text-lg shadow-md border-3 border-current">
                                 TARGET
@@ -320,7 +321,8 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-center text-sm text-black dark:text-white mt-8 opacity-80">The cursor will magnetically stick to elements with sticky effect</p>
+                <p class="text-center text-sm text-black dark:text-white mt-8 opacity-80">The cursor will magnetically
+                    stick to elements with sticky effect</p>
             </div>
         </section>
 
