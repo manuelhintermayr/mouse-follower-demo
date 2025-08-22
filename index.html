@@ -121,6 +121,33 @@
         .pointer-cursor {
             cursor: pointer !important;
         }
+
+        .mf-cursor.-theme:before {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        }
+
+        .mf-cursor.-theme .mf-cursor-text {
+            color: #fbbf24 !important;
+            font-weight: 600 !important;
+        }
+
+        .mf-cursor.-opaque {
+            opacity: 0.7 !important;
+        }
+
+        .mf-cursor.-custom:before {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57) !important;
+            animation: rainbow 2s ease-in-out infinite alternate !important;
+        }
+
+        @keyframes rainbow {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -244,7 +271,7 @@
                 </div>
 
                 <!-- Pointer -->
-                <div class="card p-6 text-left cursor-pointer" data-cursor="-pointer" data-cursor-text="LINK">
+                <div class="card p-6 text-left cursor-pointer" data-cursor="-pointer">
                     <h3 class="text-lg font-extrabold uppercase">Pointer State</h3>
                     <p class="mt-2 text-base opacity-80">Custom pointer styling</p>
                 </div>
