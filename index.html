@@ -78,43 +78,6 @@
             letter-spacing: 0.02em;
         }
 
-        /* Mouse Follower cosmetics / states */
-        .mf-cursor.-inverse .mf-cursor-inner {
-            background: #fff !important;
-            border-color: #000 !important;
-        }
-
-        .dark .mf-cursor.-inverse .mf-cursor-inner {
-            background: #000 !important;
-            border-color: #fff !important;
-        }
-
-        .mf-cursor.-hidden {
-            opacity: 0 !important;
-        }
-
-        /* hides follower only (native stays) */
-        .mf-cursor.-theme .mf-cursor-inner {
-            background: conic-gradient(from 90deg,
-                    #000 0 25%,
-                    #fff 0 50%,
-                    #000 0 75%,
-                    #fff 0 100%);
-        }
-
-        .mf-cursor.-opaque .mf-cursor-inner {
-            opacity: 0.4;
-        }
-
-        .mf-cursor.-pointer .mf-cursor-inner {
-            transform: scale(1.1);
-        }
-
-        .mf-cursor.-custom .mf-cursor-inner {
-            transform: scale(1.25) rotate(2deg);
-            border-width: 3px;
-        }
-
         .sticky-controls {
             position: fixed;
             right: 1rem;
@@ -150,7 +113,8 @@
             color: #fff !important;
         }
 
-        .dark .mf-cursor-text {
+        .dark .mf-cursor-text, 
+        .-inverse .mf-cursor-text {
             color: #000 !important;
         }
 
@@ -184,24 +148,23 @@
             <h2 class="text-2xl md:text-4xl font-bold uppercase mb-8">
                 Project Cards
             </h2>
-            <div class="grid md:grid-cols-3 gap-6">
-                <article class="card p-6" data-cursor="-opaque -pointer" data-cursor-text="VIEW">
+            <div class="grid md:grid-cols-2 gap-6">
+                <article class="card p-6" data-cursor-text="View Details">
                     <h3 class="text-xl font-bold uppercase">Web Application</h3>
                     <p class="mt-2 text-sm md:text-base">
                         A modern web app with smooth animations and interactions.
                     </p>
                 </article>
-                <article class="card p-6" data-cursor="-opaque -pointer" data-cursor-text="OPEN">
+                <article data-cursor="-inverse" data-cursor-text="Explore Project" class="card-tilt p-6 bg-black text-white text-left cursor-pointer relative overflow-hidden">
                     <h3 class="text-xl font-bold uppercase">UI Components</h3>
-                    <p class="mt-2 text-sm md:text-base">
-                        Beautiful UI components with custom cursor effects.
-                    </p>
-                </article>
-                <article class="card p-6" data-cursor="-pointer" data-cursor-text="READ">
-                    <h3 class="text-xl font-bold uppercase">Case Study</h3>
-                    <p class="mt-2 text-sm md:text-base">
-                        Typographic system, strict grids, visual reduction.
-                    </p>
+                    <p class="mt-2 text-sm md:text-base">Beautiful UI components with custom cursor effects.</p>
+                    <div class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
+                        <div class="text-center bg-black/80 py-2 px-3 border-2 border-current">
+                            <p class="text-xs font-medium text-gray-200 leading-tight">
+                                This demo is not fully available in dark mode
+                            </p>
+                        </div>
+                    </div>
                 </article>
             </div>
         </section>
@@ -254,9 +217,9 @@
                     <!-- Dark mode overlay (same behavior) -->
                     <div
                         class="hidden dark:flex absolute inset-0 bg-gray-800/60 backdrop-blur-[2px] items-center justify-center">
-                        <div class="text-center bg-black/80 py-2 px-3">
+                        <div class="text-center bg-black/80 py-2 px-3 border-2 border-current">
                             <p class="text-xs font-medium text-gray-200 leading-tight">
-                                This demo is not available in dark mode
+                                This demo is not fully available in dark mode
                             </p>
                         </div>
                     </div>
@@ -400,7 +363,7 @@
         createApp({
             setup() {
                 const isDark = ref(false);
-                const speed = ref(0.8);
+                const speed = ref(1.5);
                 let cursor;
 
                 // Init / Re-init mouse follower
