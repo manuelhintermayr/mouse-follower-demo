@@ -137,6 +137,18 @@
         .card-tilt:hover {
             transform: translateY(-2px);
         }
+
+        /* Skewing Effects (from index2.html) */
+        .mf-cursor.-skew-light .mf-cursor-inner {
+            transform: skew(8deg);
+        }
+        .mf-cursor.-skew-strong .mf-cursor-inner {
+            transform: skew(16deg);
+        }
+        .mf-cursor.-skew-extreme .mf-cursor-inner {
+            transform: skew(28deg);
+        }
+        }
     </style>
 </head>
 
@@ -255,6 +267,47 @@
                     <h3 class="text-lg font-extrabold uppercase">Custom State</h3>
                     <p class="mt-2 text-base opacity-80">Dynamic custom styling</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- Media Effects (Images & Videos) -->
+        <section class="max-w-6xl mx-auto px-6 py-12 section">
+            <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Media Effects (Images & Videos)</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="p-4 border-3 border-current cursor-pointer" data-cursor="-pointer" data-cursor-text="PREVIEW"
+                    data-cursor-img="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80&auto=format&fit=crop">
+                    <h3 class="font-bold uppercase">Landscape Photo</h3>
+                    <p class="text-sm opacity-80">Hover to preview a beautiful landscape image</p>
+                </div>
+                <div class="p-4 border-3 border-current cursor-pointer" data-cursor="-pointer" data-cursor-text="PREVIEW"
+                    data-cursor-img="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80&auto=format&fit=crop">
+                    <h3 class="font-bold uppercase">Portrait Photo</h3>
+                    <p class="text-sm opacity-80">Hover to see a stunning portrait photo</p>
+                </div>
+                <div class="p-4 border-3 border-current cursor-pointer" data-cursor="-pointer" data-cursor-text="PLAY"
+                    data-cursor-video="https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4">
+                    <h3 class="font-bold uppercase">Sample Video</h3>
+                    <p class="text-sm opacity-80">Hover to preview Big Buck Bunny video</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skewing Effects -->
+        <section class="max-w-6xl mx-auto px-6 py-12 section">
+            <h2 class="text-2xl md:text-4xl font-bold uppercase mb-6">Skewing Effects</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <button class="p-6 border-3 border-current uppercase cursor-pointer" data-cursor="-skew-light -pointer"
+                    data-cursor-text="Light Skew">
+                    Light Skew — <span class="opacity-70 text-sm">Subtle distortion effect</span>
+                </button>
+                <button class="p-6 border-3 border-current uppercase cursor-pointer" data-cursor="-skew-strong -pointer"
+                    data-cursor-text="Strong Skew">
+                    Strong Skew — <span class="opacity-70 text-sm">Medium distortion effect</span>
+                </button>
+                <button class="p-6 border-3 border-current uppercase cursor-pointer" data-cursor="-skew-extreme -pointer"
+                    data-cursor-text="Extreme Skew">
+                    Extreme Skew — <span class="opacity-70 text-sm">Maximum distortion effect</span>
+                </button>
             </div>
         </section>
 
