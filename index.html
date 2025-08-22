@@ -153,6 +153,10 @@
         .dark .mf-cursor-text {
             color: #000 !important;
         }
+
+        .pointer-cursor {
+            cursor: pointer !important;
+        }
     </style>
 </head>
 
@@ -209,12 +213,11 @@
             </h2>
             <p class="text-lg leading-relaxed">
                 This is regular text with a
-                <span class="underline px-1" data-cursor="-opaque -pointer" data-cursor-text="HOVER">
-                    special hover effect </span>, and this text has a
-                <span class="px-1 border-b-2 border-current" id="stickyTextTarget">
-                    sticky cursor effect
-                </span>
-                that follows your mouse.
+                <span class="underline px-1 pointer-cursor" data-cursor-text="Custom message!">
+                    special hover effect</span>, and this text has a
+                <span class="px-1 border-b-2 border-current pointer-cursor" data-cursor-text="Sticky cursor"
+                    data-cursor-stick>
+                    sticky cursor effect</span> that follows your mouse.
             </p>
         </section>
 
@@ -302,12 +305,14 @@
                     <p class="text-sm opacity-80">Hover to preview the sample image</p>
                 </div>
                 <!-- Sample Image 2 -->
-                <div class="p-4 border-3 border-current cursor-pointer text-center" data-cursor-img="media/avatar_1.jpg">
+                <div class="p-4 border-3 border-current cursor-pointer text-center"
+                    data-cursor-img="media/avatar_1.jpg">
                     <h3 class="font-bold uppercase">Avatar Image</h3>
                     <p class="text-sm opacity-80">Hover to preview the avatar image</p>
                 </div>
                 <!-- Sample Video -->
-                <div class="p-4 border-3 border-current cursor-pointer text-center" data-cursor-video="media/sample.mp4">
+                <div class="p-4 border-3 border-current cursor-pointer text-center"
+                    data-cursor-video="media/sample.mp4">
                     <h3 class="font-bold uppercase">Sample Video</h3>
                     <p class="text-sm opacity-80">Hover to preview the sample video</p>
                 </div>
@@ -485,14 +490,6 @@
                             scrollTrigger: { trigger: sec, start: "top 85%" },
                         });
                     });
-
-                    // Sticky text effect
-                    const stickySpan = document.querySelector("#stickyTextTarget");
-                    if (stickySpan) {
-                        stickySpan.setAttribute("data-cursor", "-pointer");
-                        stickySpan.setAttribute("data-cursor-text", "STICKY");
-                        stickySpan.setAttribute("data-cursor-stick", "#stickyTextTarget");
-                    }
                 });
 
                 return {
