@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Mouse Follower — Swiss Newspaper Edition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    fontFamily: { sans: ["Helvetica", "Arial", "sans-serif"] },
+                    borderWidth: { 3: "3px", 5: "5px" },
+                    letterSpacing: { wide2: ".06em" }
+                }
+            }
+        };
+    </script>
+
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+    <!-- GSAP -->
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+    <!-- Mouse Follower -->
+    <link rel="stylesheet" href="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.css" />
+    <script src="https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.js"></script>
+
+    <style>
+        /* Baseline + Seitenraster (Zeitungsfeeling) */
+        .grid-bg {
+            background-image:
+                linear-gradient(to bottom, rgba(0, 0, 0, .04) 1px, transparent 1px),
+                linear-gradient(to right, rgba(0, 0, 0, .04) 1px, transparent 1px);
+            background-size: 24px 24px, 64px 64px;
+        }
+
+        .dark .grid-bg {
+            background-image:
+                linear-gradient(to bottom, rgba(255, 255, 255, .08) 1px, transparent 1px),
+                linear-gradient(to right, rgba(255, 255, 255, .08) 1px, transparent 1px);
+        }
+
+        /* Spaltensatz für Newspaper */
+        .news-cols {
+            column-gap: 2.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .news-cols {
+                column-count: 3;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .news-cols {
+                column-count: 4;
+            }
+        }
+
+        /* Artikelblöcke im Spaltensatz */
+        .article {
+            break-inside: avoid;
+            border-top: 3px solid currentColor;
+            padding-top: .9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Masthead */
+        .mast-rule {
+            border-top: 5px solid currentColor;
+        }
+
+        .masthead h1 {
+            letter-spacing: .02em;
+        }
+
+        /* Kachel-/Kartenstil */
+        .tile {
+            border: 3px solid currentColor;
+            background: transparent;
+            transition: transform .15s ease-out;
+        }
+
+        .tile:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Cursor States (dein Stand + Feinschliff) */
+        .mf-cursor-text {
+            color: #fff !important;
+        }
+
+        .dark .mf-cursor-text,
+        .-inverse .mf-cursor-text {
+            color: #000 !important;
+        }
+
+        .pointer-cursor {
+            cursor: pointer !important;
+        }
+
+        .mf-cursor.-theme:before {
+            background: conic-gradient(from 90deg, #000 0 25%, #fff 0 50%, #000 0 75%, #fff 0 100%) !important;
+        }
+
+        .mf-cursor.-opaque {
+            opacity: .7 !important;
+        }
+
+        .mf-cursor.-custom:before {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57) !important;
+            animation: rainbow 2s ease-in-out infinite alternate !important;
+        }
+
+        @keyframes rainbow {
+            0% {
+                filter: hue-rotate(0)
+            }
+
+            100% {
+                filter: hue-rotate(360deg)
+            }
+        }
+
+        /* Sticky Controls */
+        .sticky-controls {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .ctl-btn {
+            padding: .5rem 1rem;
+            border: 3px solid currentColor;
+            background: transparent;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .ctl-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Media ratio Platzhalter für Spalten */
+        .ratio {
+            position: relative;
+            width: 100%;
+        }
+
+        .ratio::before {
+            content: "";
+            display: block;
+            padding-top: 56.25%;
+        }
+
+        .ratio>.ratio-inner {
+            position: absolute;
+            inset: 0;
+            border: 2px solid currentColor;
+            background: transparent;
+        }
+    </style>
+</head>
+
+<body class="font-sans">
+    <div id="app" class="grid-bg min-h-screen transition-colors">
+
+        <!-- MASTHEAD -->
+        <header class="max-w-6xl mx-auto px-6 md:px-8 pt-10">
+            <div class="masthead flex flex-col gap-2">
+                <div class="uppercase tracking-wide2 text-sm">Special Edition · Interaction Design</div>
+                <h1 class="text-4xl md:text-7xl font-bold uppercase leading-none">MOUSE FOLLOWER — SWISS NEWSPAPER
+                    EDITION</h1>
+                <div class="flex justify-between text-xs md:text-sm uppercase">
+                    <div>Crafted with &lt;3 by <strong>Manuel Hintermayr</strong></div>
+                    <div>{{ new Date().toLocaleDateString() }} · Based on
+                        <a class="underline cursor-none" data-cursor="-pointer"
+                            href="https://github.com/manuelhintermayr/nuxt4-template" target="_blank">nuxt4-template</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mast-rule mt-4"></div>
+            <p class="mt-6 max-w-3xl uppercase">
+                A minimalist newspaper-style showcase of the <strong>Mouse Follower</strong> cursor by Cuberto.
+                Strict grid, black/white, strong typographic hierarchy.
+            </p>
+        </header>
+
+        <!-- NEWSPAPER BODY -->
+        <main class="max-w-6xl mx-auto px-6 md:px-8 py-10 news-cols">
+
+            <!-- Project Cards (Artikelspalten) -->
+            <article class="article">
+                <h2 class="text-2xl md:text-4xl font-bold uppercase mb-2">Project Cards</h2>
+                <p class="text-xs opacity-70 uppercase mb-3">Hover cards to trigger pointer & opaque states.</p>
+
+                <div class="tile p-4 cursor-none mb-4" data-cursor="-opaque -pointer" data-cursor-text="VIEW">
+                    <h3 class="text-xl font-bold uppercase">Web Application</h3>
+                    <p class="mt-1 text-sm">A modern web app with smooth animations and interactions.</p>
+                    <div class="ratio mt-3">
+                        <div class="ratio-inner"></div>
+                    </div>
+                </div>
+
+                <div class="tile p-4 cursor-none mb-4" data-cursor="-opaque -pointer" data-cursor-text="OPEN">
+                    <h3 class="text-xl font-bold uppercase">UI Components</h3>
+                    <p class="mt-1 text-sm">Beautiful UI components with custom cursor effects.</p>
+                    <div class="ratio mt-3">
+                        <div class="ratio-inner"></div>
+                    </div>
+                </div>
+
+                <div class="tile p-4 cursor-none" data-cursor="-pointer" data-cursor-text="READ">
+                    <h3 class="text-xl font-bold uppercase">Case Study</h3>
+                    <p class="mt-1 text-sm">Typographic system, strict grids, visual reduction.</p>
+                    <div class="ratio mt-3">
+                        <div class="ratio-inner"></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Text Effects -->
+            <article class="article">
+                <h2 class="text-2xl md:text-4xl font-bold uppercase mb-2">Text Effects</h2>
+                <p class="text-base leading-relaxed">
+                    This is regular text with a
+                    <span class="underline px-1 cursor-none" data-cursor="-opaque -pointer" data-cursor-text="HOVER">
+                        special hover effect
+                    </span>,
+                    and this line has a
+                    <span class="px-1 border-b-2 border-current cursor-none" id="stickyTextTarget">
+                        sticky cursor effect
+                    </span>
+                    that follows your mouse.
+                </p>
+                <div class="text-xs opacity-70 uppercase mt-2">Tip: Move across the underlined pieces.</div>
+            </article>
+
+            <!-- Special Cursor States -->
+            <article class="article">
+                <h2 class="text-2xl md:text-4xl font-bold uppercase mb-2">Special Cursor States</h2>
+
+                <div class="tile p-4 cursor-none mb-3 bg-black text-white" data-cursor="-inverse -opaque"
+                    data-cursor-text="INVERSE">
+                    <h3 class="font-bold uppercase">Inverse Cursor</h3>
+                    <p class="text-xs opacity-80">Light cursor on dark background.</p>
+                </div>
+
+                <div class="tile p-4 cursor-none mb-3" data-cursor="-hidden">
+                    <h3 class="font-bold uppercase">Hidden Cursor</h3>
+                    <p class="text-xs opacity-80">Cursor becomes invisible.</p>
+                </div>
+
+                <div class="tile p-4 cursor-none mb-3" data-cursor="-theme -pointer" data-cursor-text="THEME">
+                    <h3 class="font-bold uppercase">Theme Element</h3>
+                    <p class="text-xs opacity-80">Custom conic gradient styling.</p>
+                </div>
+
+                <div class="tile p-4 cursor-none mb-3" data-cursor="-opaque -pointer" data-cursor-text="OPAQUE">
+                    <h3 class="font-bold uppercase">Opaque State</h3>
+                    <p class="text-xs opacity-80">Semi-transparent cursor.</p>
+                </div>
+
+                <div class="tile p-4 cursor-none mb-3" data-cursor="-pointer" data-cursor-text="LINK">
+                    <h3 class="font-bold uppercase">Pointer State</h3>
+                    <p class="text-xs opacity-80">Custom pointer styling.</p>
+                </div>
+
+                <div class="tile p-4 cursor-none" @mouseenter="addCustomState" @mouseleave="removeCustomState">
+                    <h3 class="font-bold uppercase">Custom State</h3>
+                    <p class="text-xs opacity-80">Dynamic custom styling.</p>
+                </div>
+            </article>
+
+            <!-- Media Effects -->
+            <article class="article">
+                <h2 class="text-2xl md:text-4xl font-bold uppercase mb-2">Media Effects (Images & Videos)</h2>
+
+                <div class="tile p-4 cursor-pointer mb-3" data-cursor="-pointer" data-cursor-text="PREVIEW"
+                    data-cursor-img="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80&auto=format&fit=crop">
+                    <h3 class="font-bold uppercase">Landscape Photo</h3>
+                    <p class="text-xs opacity-80">Hover to preview a beautiful landscape image.</p>
+                </div>
+
+                <div class="tile p-4 cursor-pointer mb-3" data-cursor="-pointer" data-cursor-text="PREVIEW"
+                    data-cursor-img="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80&auto=format&fit=crop">
+                    <h3 class="font-bold uppercase">Portrait Photo</h3>
+                    <p class="text-xs opacity-80">Hover to see a stunning portrait photo.</p>
+                </div>
+
+                <div class="tile p-4 cursor-pointer" data-cursor="-pointer" data-cursor-text="PLAY"
+                    data-cursor-video="https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4">
+                    <h3 class="font-bold uppercase">Sample Video</h3>
+                    <p class="text-xs opacity-80">Hover to preview Big Buck Bunny video.</p>
+                </div>
+            </article>
+
+            <!-- Sticky Cursor Effects -->
+            <article class="article">
+                <h2 class="text-2xl md:text-4xl font-bold uppercase mb-2">Sticky Cursor Effects</h2>
+
+                <div class="flex gap-3 items-center mb-3">
+                    <div id="stickA" class="px-4 py-2 tile font-bold uppercase text-sm text-center">A</div>
+                    <div id="stickB" class="px-4 py-2 tile font-bold uppercase text-sm text-center">B</div>
+                </div>
+
+                <div class="tile p-4 cursor-none inline-block mr-2" data-cursor="-pointer" data-cursor-text="STICK"
+                    data-cursor-stick="#stickA">
+                    STICK
+                </div>
+
+                <div class="tile p-4 cursor-none inline-block" data-cursor="-pointer" data-cursor-text="TARGET"
+                    data-cursor-stick="#stickB">
+                    TARGET
+                </div>
+
+                <p class="text-xs opacity-70 mt-2 uppercase">
+                    The cursor magnetically sticks to the referenced targets.
+                </p>
+            </article>
+
+            <!-- Skewing Effects -->
+            <article class="article">
+                <h2 class="text-2xl md:text-4xl font-bold uppercase mb-2">Skewing Effects</h2>
+
+                <button class="px-4 py-3 tile uppercase cursor-pointer w-full text-left mb-3"
+                    data-cursor="-skew-light -pointer" data-cursor-text="Light Skew" onmouseenter="setSkewing(5)"
+                    onmouseleave="removeSkewing()">
+                    Light Skew — <span class="opacity-70 text-xs">Subtle distortion effect</span>
+                </button>
+
+                <button class="px-4 py-3 tile uppercase cursor-pointer w-full text-left mb-3"
+                    data-cursor="-skew-strong -pointer" data-cursor-text="Strong Skew" onmouseenter="setSkewing(50)"
+                    onmouseleave="removeSkewing()">
+                    Strong Skew — <span class="opacity-70 text-xs">Medium distortion effect</span>
+                </button>
+
+                <button class="px-4 py-3 tile uppercase cursor-pointer w-full text-left"
+                    data-cursor="-skew-extreme -pointer" data-cursor-text="Extreme Skew" onmouseenter="setSkewing(100)"
+                    onmouseleave="removeSkewing()">
+                    Extreme Skew — <span class="opacity-70 text-xs">Maximum distortion effect</span>
+                </button>
+            </article>
+
+            <!-- Configuration (Speed) -->
+            <article class="article">
+                <h2 class="text-2xl md:text-4xl font-bold uppercase mb-2">Configuration Options</h2>
+                <div class="tile p-4">
+                    <label class="block uppercase font-bold mb-2">Cursor Speed</label>
+                    <input type="range" min="0.1" max="2" step="0.05" v-model.number="speed" @input="applySpeed"
+                        class="w-full accent-black dark:accent-white" />
+                    <div class="mt-2 text-xs uppercase">Current Speed:
+                        <strong>{{ speed.toFixed(2) }}</strong>
+                    </div>
+                    <div class="mt-3 flex gap-3">
+                        <button class="px-3 py-1 border-2 border-current uppercase"
+                            @click="speed=0.25;applySpeed()">Slow</button>
+                        <button class="px-3 py-1 border-2 border-current uppercase"
+                            @click="speed=1.25;applySpeed()">Fast</button>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <!-- Sticky Controls -->
+        <div class="sticky-controls">
+            <button class="ctl-btn bg-white/80 dark:bg-black/80 cursor-none" data-cursor="-pointer"
+                data-cursor-text="TOP" @click="scrollTop">Top ↑</button>
+            <button class="ctl-btn bg-white dark:bg-black cursor-none" data-cursor="-pointer" data-cursor-text="SWITCH"
+                @click="toggleDark">{{ isDark ? 'Light Mode' : 'Dark Mode' }}</button>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="max-w-6xl mx-auto px-6 md:px-8 pb-12 pt-6 border-t-4 border-current uppercase text-xs">
+            © {{ new Date().getFullYear() }} — Swiss Style Newspaper Demo • Mouse Follower • Manuel Hintermayr
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const isDark = ref(false);
+                const speed = ref(1.5);
+                let cursor;
+
+                const initCursor = () => {
+                    if (window.MouseFollower && window.gsap) {
+                        window.MouseFollower.registerGSAP(window.gsap);
+                    }
+                    if (cursor) try { cursor.destroy(); } catch (e) { }
+                    cursor = new MouseFollower({
+                        speed: 2.1 - Number(speed.value),   // höherer Slider => schneller
+                        ease: "expo.out",
+                        skewing: 0,
+                        skewingText: 2,
+                        skewingIcon: 2,
+                        skewingMedia: 2,
+                        skewingDelta: 0.001,
+                        skewingDeltaMax: 0.15,
+                        stateDetection: {
+                            "-pointer": 'a,button,[data-cursor*="-pointer"],[data-cursor*="-text"]',
+                            "-hidden": '[data-cursor~="-hidden"]'
+                        }
+                    });
+                    window.mfInstance = cursor; // für Skew-Handler
+                };
+
+                const toggleDark = () => {
+                    isDark.value = !isDark.value;
+                    const root = document.documentElement;
+                    if (isDark.value) root.classList.add("dark");
+                    else root.classList.remove("dark");
+                    setTimeout(() => initCursor(), 40); // Kontrast der Cursor-Innereien refreshen
+                };
+
+                const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+                const applySpeed = () => {
+                    try {
+                        cursor.setOptions({ speed: 2.1 - Number(speed.value) });
+                    } catch (e) {
+                        initCursor();
+                    }
+                };
+
+                const addCustomState = () => cursor?.addState && cursor.addState("-custom");
+                const removeCustomState = () => cursor?.removeState && cursor.removeState("-custom");
+
+                // Globale Skew-Controls (für inline onmouseenter)
+                window.setSkewing = (factor) => {
+                    if (window.mfInstance) {
+                        const c = window.mfInstance;
+                        c.skewing = factor;
+                        c.options.skewingDelta = 0.01;
+                        c.options.skewingDeltaMax = 1.0;
+                        c.render(true);
+                    }
+                };
+                window.removeSkewing = () => {
+                    if (window.mfInstance) {
+                        const c = window.mfInstance;
+                        c.skewing = 0;
+                        c.options.skewingDelta = 0.001;
+                        c.options.skewingDeltaMax = 0.15;
+                        c.render(true);
+                    }
+                };
+
+                onMounted(() => {
+                    // Theme initialisieren
+                    if (isDark.value) document.documentElement.classList.add("dark");
+                    else document.documentElement.classList.remove("dark");
+
+                    initCursor();
+
+                    // dezente Reveals
+                    gsap.registerPlugin(ScrollTrigger);
+                    gsap.utils.toArray(".article").forEach((el) => {
+                        gsap.from(el, {
+                            opacity: 0, y: 20, duration: .55, ease: "power1.out",
+                            scrollTrigger: { trigger: el, start: "top 85%" }
+                        });
+                    });
+
+                    // Sticky-Word verbinden
+                    const stickySpan = document.querySelector("#stickyTextTarget");
+                    if (stickySpan) {
+                        stickySpan.setAttribute("data-cursor", "-pointer");
+                        stickySpan.setAttribute("data-cursor-text", "STICKY");
+                        stickySpan.setAttribute("data-cursor-stick", "#stickyTextTarget");
+                    }
+                });
+
+                return { isDark, speed, toggleDark, scrollTop, applySpeed, addCustomState, removeCustomState };
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>
