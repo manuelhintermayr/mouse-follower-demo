@@ -74,7 +74,7 @@ Feel free to fork, customize, and submit pull requests!
 
 ## 📄 License
 
-[MIT License](LICENSE)
+The project's own source code is available under the [MIT License](LICENSE). The third-party libraries used by this demo — [Mouse Follower](https://github.com/Cuberto/mouse-follower) by Cuberto (MIT), GSAP, Vue, and Tailwind CSS — are loaded from public CDNs and are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ---
 
